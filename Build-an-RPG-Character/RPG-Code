@@ -1,0 +1,37 @@
+full_dot = '●'
+empty_dot = '○'
+
+def create_character(name, strength, intelligence, charisma):
+    if not isinstance(name, str):
+        return "The character name should be a string"
+    elif len(name) == 0:
+        return "The character should have a name"
+    elif len(name) > 10:
+        return "The character name is too long"
+    elif ' ' in name:
+        return "The character name should not contain spaces"
+
+    stats = strength, intelligence, charisma
+
+    if not all(isinstance(stat, int) for stat in stats):
+        return "All stats should be integers"
+    if any(stat < 1 for stat in stats):
+        return "All stats should be no less than 1"
+    if any(stat > 4 for stat in stats):
+        return "All stats should be no more than 4"
+    if sum(stats) != 7:
+        return "The character should start with 7 points"
+
+    dots = empty_dot * 10
+
+    str_dots = full_dot * strength + dots[strength:]
+    int_dots = full_dot * intelligence + dots[intelligence:]
+    cha_dots = full_dot * charisma + dots[charisma:]
+
+    return f"""{name}
+STR {str_dots}
+INT {int_dots}
+CHA {cha_dots}"""
+
+
+print(create_character("ren", 4, 2, 1))
